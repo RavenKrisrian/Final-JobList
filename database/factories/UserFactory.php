@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\ListJobs;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 /**
- * @extends Factory<ListJobs>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
-class ListJobsFactory extends Factory
+class UserFactory extends Factory
 {
-    use HasFactory;
     /**
      * The current password being used by the factory.
      */
@@ -24,11 +24,11 @@ class ListJobsFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(),
-            'description' => fake()->paragraph(),
-            'company' => fake()->company(),
-            'location' => fake()->city(),
-            'salary' => fake()->randomFloat(2, 50000, 150000),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('password'),
+            'remember_token' => Str::random(10),
         ];
     }
 
